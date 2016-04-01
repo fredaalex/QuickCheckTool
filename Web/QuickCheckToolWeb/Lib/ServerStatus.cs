@@ -47,5 +47,22 @@ namespace QuickCheckToolWeb.Lib
         public string OSName { get; set; }
 
         public string ProcessorName { get; set; }
+
+        public string StatusColor {
+            get
+            {
+                switch (new Random().Next(4))
+                {
+                    case 0:
+                        return "green";
+                    case 1:
+                        return "yellow";
+                    case 2:
+                        return "red";
+                    default:
+                        return "blue";
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@
             $server = $("#" + server.Id);
             if ($server.length == 0) {
 
-                var $all = $('<div id="' + server.Id + '" class="widget green span4 server" onTablet="span6" onDesktop="span4">' +
+                var $all = $('<div id="' + server.Id + '" class="widget '+ server.StatusColor +' span4 server" onTablet="span6" onDesktop="span4">' +
         '<h2>' + server.Ip + '</h2>' +
         '<hr>' +
     '</div>')
@@ -53,7 +53,8 @@
             } else {
                 $server.find(".ramCircle").val(server.MemoryUsage).change();
                 $server.find(".hdCircle").val(server.HDUsage).change();
-            }
+                $server.removeClass('red').removeClass('yellow').removeClass('blue').removeClass('green').addClass(server.StatusColor);
+                            }
         }
 
         var $row = null;
