@@ -1,31 +1,89 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿<ul class="breadcrumb">
+    <li>
+        <i class="icon-home"></i>
+        <a href="index.html">Home</a>
+        <i class="icon-angle-right"></i>
+    </li>
+    <li><a href="#">Dashboard</a></li>
+</ul>
+
+<div id="servers">
+
+</div>
+
+@section js
+{
+    <script type="text/javascript">
+        function updateServers() {
+            $.ajax({
+                url: '@Url.Content("~/Home/ReadServers")',
+                success: function (servers) {
+                    for (var serverIdx in servers) {
+                        updateServer(servers[serverIdx]);
+                    }
+
+                    setTimeout(updateServers, 5000);
+                },
+                dataType: 'JSON'
+            });
+        }
+
+        function updateServer(server) {
+            $server = $("#" + server.Id);
+            if ($server.length == 0) {
+
+                var $all = $('<div id="' + server.Id + '" class="widget green span4 server" onTablet="span6" onDesktop="span4">' +
+        '<h2>' + server.Ip + '</h2>' +
+        '<hr>' +
+    '</div>')
+                var $content = $('<div class="content">');
+
+                var $c1 = $("<div class='span6'>");
+                var $c2 = $("<div class='span6' style='text-align:right'>");
+                $content.append($c1)
+                $content.append($c2)
+                $all.append($content);
+                $row.append($all);
+                createItem($c1, 'RAM', server.MemoryUsage, 'ramCircle');
+                createItem($c1, 'HD', server.HDUsage, 'hdCircle');
+                createItem($c1, 'CPU', 58, 'cpuCircle');
+
+                $c2.append("<div>" + server.OSName + "</div>")
+                $c2.append("<div>" + server.ProcessorName + "</div>")
+            } else {
+                $server.find(".ramCircle").val(server.MemoryUsage).change();
+                $server.find(".hdCircle").val(server.HDUsage).change();
+            }
+        }
+
+        var $row = null;
+        $(document).ready(function () {
+            $row = $('<div class="row-fluid">');
+		    $("#servers").append($row)
+		    updateServers();
+		});
+
+		function createItem($parent, name, value, cssClass){
+
+				var $row = $("<div>")
+				$parent.append($row)
+				var $circle = $('<input type="text" value="' + value + '" class="whiteCircle ' + cssClass + '" id="c' + i + '">');
+				$row.append($circle);
+				$circle.knob({
+				        'min':0,
+				        'max':100,
+				        'readOnly': true,
+				        'width': 40,
+				        'height': 40,
+						'bgColor': 'rgba(255,255,255,0.5)',
+				        'fgColor': 'rgba(255,255,255,0.9)',
+				        'dynamicDraw': false,
+				        'thickness': 0.2,
+				        'tickColorizeValues': true
+	    			});
+				$row.append('<span>'+name+'</span>');
+				//$("#c0").val(20).change()
+
+		}
+    </script>
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
