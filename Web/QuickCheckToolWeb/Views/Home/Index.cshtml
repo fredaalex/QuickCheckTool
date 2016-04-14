@@ -5,7 +5,13 @@
         <i class="icon-angle-right"></i>
     </li>
     <li><a href="#">Dashboard</a></li>
+
+    <a style="position:absolute;left:50%;color:white" class="btn btn-primary" href="/Home/Create" target="createPage">
+        Novo Server
+    </a>
 </ul>
+
+
 
 <div id="servers">
 
@@ -46,7 +52,7 @@
                 $row.append($all);
                 createItem($c1, 'RAM', server.MemoryUsage, 'ramCircle');
                 createItem($c1, 'HD', server.HDUsage, 'hdCircle');
-                createItem($c1, 'CPU', 58, 'cpuCircle');
+                createItem($c1, 'CPU', server.ProcessorUsage, 'cpuCircle');
 
                 $c2.append("<div>" + server.OSName + "</div>")
                 $c2.append("<div>" + server.ProcessorName + "</div>")

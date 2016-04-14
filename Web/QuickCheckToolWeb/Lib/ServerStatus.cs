@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuickCheckToolWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,11 +8,13 @@ namespace QuickCheckToolWeb.Lib
 {
     public class ServerStatus
     {
-        public ServerStatus(String ip, String id)
+        public ServerStatus(String ip, String id, NewServerModel config)
         {
             this.Ip = ip;
             this.Id = id;
+            this.Config = config;
         }
+        public NewServerModel Config { get; set; }
         public String Ip { private set; get; }
         public String Id { private set; get; }
         
@@ -48,9 +51,29 @@ namespace QuickCheckToolWeb.Lib
 
         public string ProcessorName { get; set; }
 
+        public int ProcessorUsage { get; set; }
+
         public string StatusColor {
             get
             {
+
+
+                if(ProcessorUsage >= Config.ProcessPercentualThreshold)
+                {
+                    return "red";
+                }
+                if(HDUsage >= Config.HDPercentualThreshold)
+                {
+                    return "red";
+                }
+
+                if(MemoryUsage > Config.MemoryPercentualThreshold)
+                {
+                    return "red";
+                }
+
+                return "green";
+                /*
                 switch (new Random().Next(4))
                 {
                     case 0:
@@ -62,6 +85,7 @@ namespace QuickCheckToolWeb.Lib
                     default:
                         return "blue";
                 }
+                */
             }
         }
     }
