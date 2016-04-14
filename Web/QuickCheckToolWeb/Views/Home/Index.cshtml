@@ -59,6 +59,7 @@
             } else {
                 $server.find(".ramCircle").val(server.MemoryUsage).change();
                 $server.find(".hdCircle").val(server.HDUsage).change();
+                $server.find(".cpuCircle").val(server.ProcessorUsage).change();
                 $server.removeClass('red').removeClass('yellow').removeClass('blue').removeClass('green').addClass(server.StatusColor);
                             }
         }
